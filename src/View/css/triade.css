@@ -1,0 +1,29 @@
+.root{
+    /*-fx-background-image: url("/br/ufms/desafio/view/images/space.jpg");*/
+    -fx-background-image: url("/View/image/music_1.jpg");
+    -fx-background-image-opacity: 0.3;
+    -fx-background-repeat: stretch;
+    -fx-background-size: auto 107%;
+    /*-fx-background-size: 1800 1200;*/
+    -fx-background-position:  center center;
+    -fx-backgound-opacity:0.1;
+   opacity: 0.1;
+    -fx-background-color: black;
+    -fx-background-opacity:0.3;
+    /*-fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
+}
+.button.btnVerde{
+    -fx-base: #16e832;
+}
+
+.button.btnAzul{
+    -fx-base: #559eff;
+}
+
+.transparent{
+   opacity:0.5;
+}
+
+
+
+

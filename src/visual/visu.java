@@ -5,7 +5,7 @@
  */
 package visual;
 
-import controler.triadesController;
+import Controller.triadesController;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -204,8 +204,8 @@ public class visu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseReleased
 
     private void entradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entradaActionPerformed
-        jTextArea1.append(triades.novaTriades(entrada.getText()));
-        entrada.setText("");
+//        jTextArea1.append(triades.novaTriades(entrada.getText()));
+//        entrada.setText("");
 
     }//GEN-LAST:event_entradaActionPerformed
 
