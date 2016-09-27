@@ -1,8 +1,12 @@
-# Triades
+# Triades v2.0
 
-Programa feito para auxiliar e facilitar a visualização da formação das notas.
+Programa feito para auxiliar e facilitar a criaÃ§Ã£o de novas vozes com base em sua cifra.
 
-# Entrada
+## Entrada
 
-O programa recebe como entrada notas cifradas, separadas por espaço, e para cada nota, mostra sua formação(1ª,3ª,5ª).
+O programa recebe como entrada notas cifradas, separadas por espaÃ§o, e a primeira nota que Ã© cantada pela 1Âª voz, correspondente a primeira nota digitada na cifra.
+
+## SaÃ­da
+
+Como saÃ­da, Ã© calculada duas vozes que se encaixam perfeitamente na cifra digitada.
 
