@@ -12,5 +12,5 @@ Como saída, é calculada duas vozes que se encaixam perfeitamente na cifra digi
 
 ## Prints
 
-![Algoritmos-Uteis](https://uploaddeimagens.com.br/imagens/1-jpg--4242)
+![Algoritmos-Uteis](https://uploaddeimagens.com.br/images/000/732/670/original/1.jpg?1475268437)
 
