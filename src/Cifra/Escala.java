@@ -28,7 +28,7 @@ public class Escala {
         return false;
     }
 
-    public String getNotaMaisProxima(Nota notaAtual, Nota proximaTriade[]) {
+    public int getDistanciaNotas(Nota notaAtual, Nota proximaNota) {
         //Busca que será usada para calcular a distância de cada nota
         BuscaSequencialR buscaS = new BuscaSequencialR();
         //É calculada a posição da nota atual no vetor, e de cada nota da triade.
@@ -39,61 +39,38 @@ public class Escala {
         //a distância entre o C e o B, seria de 11,
         //quando na verdade é apenas de 1.
         int posicaoDaNotaAtualNoVetor_p = buscaS.BuscaSeqRecursivaEsqDir(escala, notaAtual.getNota());
-        int posicaoDaNota1DaTriade_p = buscaS.BuscaSeqRecursivaEsqDir(escala, proximaTriade[0].getNota());
-        int posicaoDaNota2DaTriade_p = buscaS.BuscaSeqRecursivaEsqDir(escala, proximaTriade[1].getNota());
-        int posicaoDaNota3DaTriade_p = buscaS.BuscaSeqRecursivaEsqDir(escala, proximaTriade[2].getNota());
-        //Aqui é calculado a distância de cada nota da triade com relação a nota atual.
-        int distancia_1_p = Math.abs(posicaoDaNota1DaTriade_p - posicaoDaNotaAtualNoVetor_p);
-        int distancia_2_p = Math.abs(posicaoDaNota2DaTriade_p - posicaoDaNotaAtualNoVetor_p);
-        int distancia_3_p = Math.abs(posicaoDaNota3DaTriade_p - posicaoDaNotaAtualNoVetor_p);
+        //BUSCANDO ESQ PRA DIREITA
+        int posicaoDaProxNota_p = buscaS.BuscaSeqRecursivaEsqDir(escala, proximaNota.getNota());
+        int distancia_p = Math.abs(posicaoDaProxNota_p - posicaoDaNotaAtualNoVetor_p);
 
         int posicaoDaNotaAtualNoVetor_s = buscaS.BuscaSeqRecursivaDirEsq(escala, notaAtual.getNota());
-        int posicaoDaNota1DaTriade_s = buscaS.BuscaSeqRecursivaDirEsq(escala, proximaTriade[0].getNota());
-        int posicaoDaNota2DaTriade_s = buscaS.BuscaSeqRecursivaDirEsq(escala, proximaTriade[1].getNota());
-        int posicaoDaNota3DaTriade_s = buscaS.BuscaSeqRecursivaDirEsq(escala, proximaTriade[2].getNota());
-        int distancia_1_s = Math.abs(posicaoDaNota1DaTriade_s - posicaoDaNotaAtualNoVetor_s);
-        int distancia_2_s = Math.abs(posicaoDaNota2DaTriade_s - posicaoDaNotaAtualNoVetor_s);
-        int distancia_3_s = Math.abs(posicaoDaNota3DaTriade_s - posicaoDaNotaAtualNoVetor_s);
-
-        int distanciaCerta_1;
-        int distanciaCerta_2;
-        int distanciaCerta_3;
+        int posicaoDaProxNota_s = buscaS.BuscaSeqRecursivaDirEsq(escala, proximaNota.getNota());
+        int distancia_s = Math.abs(posicaoDaProxNota_s - posicaoDaNotaAtualNoVetor_s);
         //Como fiz duas buscas, aqui vejo qual valor devo utilizar, o menor de cada, no caso.
-        if (distancia_1_p < distancia_1_s) {
-            distanciaCerta_1 = distancia_1_p;
+        if (distancia_p < distancia_s) {
+            return distancia_p;
         } else {
-            distanciaCerta_1 = distancia_1_s;
+            return distancia_s;
         }
+    }
 
-        if (distancia_2_p < distancia_2_s) {
-            distanciaCerta_2 = distancia_2_p;
-        } else {
-            distanciaCerta_2 = distancia_2_s;
-        }
+    public String getNotaMaisProxima(Nota notaAtual, Nota proximaTriade[]) {
+        BuscaSequencialR buscaS = new BuscaSequencialR();
 
-        if (distancia_3_p < distancia_3_s) {
-            distanciaCerta_3 = distancia_3_p;
-        } else {
-            distanciaCerta_3 = distancia_3_s;
-        }
-        System.out.println("NOTA ATUAL = " + posicaoDaNotaAtualNoVetor_p);
-        System.out.println("1 nota = " + posicaoDaNota1DaTriade_p);
-        System.out.println("2 nota = " + posicaoDaNota2DaTriade_p);
-        System.out.println("3 nota = " + posicaoDaNota3DaTriade_p);
-        System.out.println("distancia 1 = " + distancia_1_p);
-        System.out.println("distancia 2 = " + distancia_2_p);
-        System.out.println("distancia 3 = " + distancia_3_p);
+        int distanciaCerta_1 = getDistanciaNotas(notaAtual, proximaTriade[0]);
+        int distanciaCerta_2 = getDistanciaNotas(notaAtual, proximaTriade[1]);
+        int distanciaCerta_3 = getDistanciaNotas(notaAtual, proximaTriade[2]);
 
         if (distanciaCerta_1 < distanciaCerta_2) {
             if (distanciaCerta_1 < distanciaCerta_3) {
-                return escala[posicaoDaNota1DaTriade_p];
+                return escala[buscaS.BuscaSeqRecursivaEsqDir(escala, proximaTriade[0].getNota())];
             } else {
-                return escala[posicaoDaNota3DaTriade_p];
+                return escala[buscaS.BuscaSeqRecursivaEsqDir(escala, proximaTriade[2].getNota())];
             }
         } else if (distanciaCerta_2 < distanciaCerta_3) {
-            return escala[posicaoDaNota2DaTriade_p];
+            return escala[buscaS.BuscaSeqRecursivaEsqDir(escala, proximaTriade[1].getNota())];
         } else {
-            return escala[posicaoDaNota3DaTriade_p];
+            return escala[buscaS.BuscaSeqRecursivaEsqDir(escala, proximaTriade[2].getNota())];
         }
     }
 
@@ -110,9 +87,7 @@ public class Escala {
         for (int i = 0, cont = 0; i < triade.length; i++) {
             if (!triade[i].getNota().equalsIgnoreCase(primeiraNota.getNota())) {
                 restante[cont] = new Nota(triade[i].getNota());
-
                 cont++;
-                System.out.println(cont);
             }
         }
         return restante;

@@ -195,15 +195,13 @@ public class PrincipalController implements Initializable {
         Nota primeiraTriade[] = new Nota(cifra[0]).getTriade();
 
         Nota duoRestante[] = escala.getPossibilidades(new Nota(cifra[0]).getTriade(), primeiraNotaCantada);
-        for (int i = 0; i < cifra.length; i++) {
-            Nota proxTriade[] = new Nota(cifra[i]).getTriade();
-            criarChoiceBox(new Nota(cifra[i]), new Nota(escala.getNotaMaisProxima(duoRestante[0], proxTriade)), hbVozUm);
-            criarChoiceBox(new Nota(cifra[i]), new Nota(escala.getNotaMaisProxima(duoRestante[1], proxTriade)), hbVozDois);
+        for (String nota : cifra) {
+            Nota[] proxTriade = new Nota(nota).getTriade();
+            criarChoiceBox(new Nota(nota), new Nota(escala.getNotaMaisProxima(duoRestante[0], proxTriade)), hbVozUm);
+            criarChoiceBox(new Nota(nota), new Nota(escala.getNotaMaisProxima(duoRestante[1], proxTriade)), hbVozDois);
         }
-
     }
 
-    // f c g f c g f c g f g a
     public void imprimirTriades() {
         String cifra[] = tfEntrada.getText().split(" ");
         String saida = "";
@@ -213,8 +211,6 @@ public class PrincipalController implements Initializable {
                 saida += c + " - " + Arrays.toString(n.getTriade()) + "\n";
             }
         }
-        System.out.println(saida);
-
         tfSaida.setText(saida);
     }
 
