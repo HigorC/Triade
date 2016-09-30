@@ -1,6 +1,6 @@
 .root{
     /*-fx-background-image: url("/br/ufms/desafio/view/images/space.jpg");*/
-    -fx-background-image: url("/View/image/music_1.jpg");
+    -fx-background-image: url("/View/image/music_3.jpg");
     -fx-background-image-opacity: 0.3;
     -fx-background-repeat: stretch;
     -fx-background-size: auto 107%;
@@ -16,14 +16,21 @@
     -fx-base: #16e832;
 }
 
+
 .button.btnAzul{
     -fx-base: #559eff;
+}
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #343838;
 }
 
 .transparent{
    opacity:0.5;
 }
 
-
+/*.tab{
+        
+    -fx-background-color:#545454;  
+}*/
 
 

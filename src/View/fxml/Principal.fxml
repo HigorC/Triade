@@ -1,42 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PrincipalController">
-   <center>
-      <VBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Vozes possíveis para essa cifra" textFill="WHITE">
-               <font>
-                  <Font name="Aharoni Bold" size="27.0" />
-               </font></Label>
-            <TextField fx:id="tfVozUm" editable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="400.0" promptText="Voz 1" />
-            <TextField fx:id="tfVozDois" editable="false" maxWidth="-Infinity" prefHeight="25.0" prefWidth="400.0" promptText="Voz 2" />
-            <TextArea fx:id="tfSaida" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="106.0" prefWidth="400.0" promptText="Tríades da sua cifra" />
-         </children>
-      </VBox>
-   </center>
-   <top>
-      <HBox alignment="CENTER" spacing="5.0" BorderPane.alignment="CENTER">
-         <children>
-            <TextField fx:id="tfPrimeiraNota" onAction="#enviar" prefHeight="25.0" prefWidth="63.0" promptText="1ª Nota" />
-            <TextField fx:id="tfEntrada" onAction="#enviar" onKeyPressed="#alteracaoEntrada" promptText="Digite a cifra da música, separado por espaços" HBox.hgrow="ALWAYS" />
-            <ComboBox fx:id="cbNotasNaturais" prefHeight="25.0" prefWidth="68.0" />
-            <Button fx:id="btnAdicionar" mnemonicParsing="false" onAction="#adicionarNota" styleClass="btnAzul" text="+" textFill="WHITE" />
-            <Button fx:id="fxEnviar" mnemonicParsing="false" onAction="#enviar" styleClass="btnVerde" text="Criar" textFill="WHITE" />
-         </children>
-         <padding>
-            <Insets left="5.0" right="5.0" top="5.0" />
-         </padding>
-      </HBox>
-   </top>
+    <center>
+        <TabPane styleClass="ul" BorderPane.alignment="CENTER">
+            <tabs>
+                <Tab closable="false" text="Criador de Voz">
+                    <content>
+                        <VBox alignment="CENTER">
+                            <children>
+                                <Label fx:id="lbMsg" alignment="CENTER" textAlignment="CENTER" textFill="WHITE">
+                                    <font>
+                                        <Font name="Aharoni Bold" size="27.0" />
+                                    </font>
+                                    <effect>
+                                        <DropShadow />
+                                    </effect>
+                                </Label>
+                                <HBox fx:id="hbVozUm" alignment="CENTER" spacing="5.0" style="-fx-background-color: CORNFLOWERBLUE;">
+                                    <children>
+                                        <Label fx:id="lbVozUm" text="Voz 1" textFill="WHITE">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox fx:id="hbVozDois" alignment="CENTER" spacing="5.0" style="-fx-background-color: BLUEVIOLET;">
+                                    <children>
+                                        <Label fx:id="lbVozDois" style="-fx-background-color: BLUEVIOLET;" text="Voz 2" textFill="WHITE">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                        <Label fx:id="lbMsg2" text="Sinta-se a vontade para modificar as vozes criadas, selecione nota por nota e crie sua própria melodia" textFill="WHITE" visible="false" />
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="Vizualizador de Tríades">
+                    <content>
+                        <VBox alignment="CENTER">
+                            <children>
+                                <Label text="Tríades da sua cifra" textFill="WHITE">
+                                    <effect>
+                                        <DropShadow />
+                                    </effect>
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <TextArea fx:id="tfSaida" editable="false" maxWidth="-Infinity" prefHeight="200.0" prefWidth="134.0" />
+                            </children>
+                        </VBox>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+    <top>
+        <HBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #343838;" BorderPane.alignment="CENTER">
+            <children>
+                <ComboBox fx:id="cbPrimeiraNota" promptText="1ª Nota">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="C" />
+                            <String fx:value="C#" />
+                            <String fx:value="D" />
+                            <String fx:value="D#" />
+                            <String fx:value="E" />
+                            <String fx:value="F" />
+                            <String fx:value="F#" />
+                            <String fx:value="G" />
+                            <String fx:value="G#" />
+                            <String fx:value="A" />
+                            <String fx:value="A#" />
+                            <String fx:value="B" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                <TextField fx:id="tfEntrada" onAction="#enviar" onKeyPressed="#alteracaoEntrada" promptText="Digite a cifra da música, separado por espaços" HBox.hgrow="ALWAYS" />
+                <ComboBox fx:id="cbNotasNaturais" prefHeight="25.0" prefWidth="68.0" />
+                <Button fx:id="btnAdicionar" mnemonicParsing="false" onAction="#adicionarNota" styleClass="btnAzul" text="+" textFill="WHITE" />
+                <Button fx:id="fxEnviar" mnemonicParsing="false" onAction="#enviar" styleClass="btnVerde" text="Criar" textFill="WHITE" />
+            </children>
+            <padding>
+                <Insets left="5.0" right="5.0" top="5.0" />
+            </padding>
+        </HBox>
+    </top>
 </BorderPane>

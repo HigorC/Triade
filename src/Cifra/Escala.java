@@ -95,7 +95,6 @@ public class Escala {
         } else {
             return escala[posicaoDaNota3DaTriade_p];
         }
-
     }
 
     /**
