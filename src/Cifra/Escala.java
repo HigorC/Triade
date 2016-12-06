@@ -6,6 +6,7 @@
 package Cifra;
 
 import Controller.BuscaSequencialR;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,19 +15,23 @@ import Controller.BuscaSequencialR;
 public class Escala {
 
     private final String escala[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "C"};
-    private final String notasImplementadas[] = {"C", "D", "E", "F", "G", "A", "B",
-        "Cm", "Dm", "Em", "Fm", "Gm", "Am", "Bm",
-        "C#", "D#", "F#", "G#", "A#",
-        "C#m", "D#m", "F#m", "G#m", "A#m", "B#m"};
+//    private final String notasImplementadas[] = {"C", "D", "E", "F", "G", "A", "B",
+//        "Cm", "Dm", "Em", "Fm", "Gm", "Am", "Bm",
+//        "C#", "D#", "F#", "G#", "A#",
+//        "C#m", "D#m", "F#m", "G#m", "A#m", "B#m",
+//        "C7", "D7", "E7", "F7", "G7", "A7", "B7",
+//        "Cm7", "Dm7", "Em7", "Fm7", "Gm7", "Am7", "Bm7",
+//        "C#7", "D#7", "F#7", "G#7", "A#7",
+//        "C#m7", "D#m7", "F#m7", "G#m7", "A#m7"};
 
-    public boolean foiImplementado(String nota) {
-        for (String n : getNotasImplementadas()) {
-            if (n.equalsIgnoreCase(nota)) {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean foiImplementado(String nota) {
+//        for (String n : getNotasImplementadas()) {
+//            if (n.equalsIgnoreCase(nota)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     public int getDistanciaNotas(Nota notaAtual, Nota proximaNota) {
         //Busca que será usada para calcular a distância de cada nota
@@ -95,8 +100,8 @@ public class Escala {
 
     /**
      * @return the notasImplementadas
-     */
-    public String[] getNotasImplementadas() {
-        return notasImplementadas;
-    }
+//     */
+//    public ArrayList<String> getNotasImplementadas() {
+//        return notasImplementadas;
+//    }
 }

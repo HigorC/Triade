@@ -8,6 +8,7 @@ package Controller;
 import Cifra.Escala;
 import Cifra.Nota;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -38,10 +39,6 @@ public class PrincipalController implements Initializable {
     private Button fxEnviar;
 
     @FXML
-    private ComboBox<String> cbNotasNaturais;
-    @FXML
-    private Button btnAdicionar;
-    @FXML
     private HBox hbVozUm;
     @FXML
     private HBox hbVozDois;
@@ -60,18 +57,21 @@ public class PrincipalController implements Initializable {
     @FXML
     private ComboBox<String> cbPrimeiraNota;
 
+//    ArrayList<String> noImp = escala.getNotasImplementadas();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Setando no comboBox todas as notas que foram implementadas .
         ObservableList<String> obsList = FXCollections.observableArrayList();
-        String noImp[] = escala.getNotasImplementadas();
-        obsList.addAll(noImp);
-        cbNotasNaturais.setItems(obsList);
-        cbNotasNaturais.setValue(noImp[0]);
+
+//        obsList.addAll(noImp);
+//        cbNotasNaturais.setItems(obsList);
+//        cbNotasNaturais.setValue(noImp.get(0));
         lbMsg.setText("Digite uma cifra, e a primeira nota que\n  a voz principal da música reproduz");
     }
 
     private void setHboxPadrao() {
+        hbVozUm.getChildren().removeAll(hbVozUm.getChildren());
+        hbVozDois.getChildren().removeAll(hbVozDois.getChildren());
         setText(lbVozUm, "Voz 1", 20);
         setText(lbVozDois, "Voz 2", 20);
         hbVozUm.getChildren().add(lbVozUm);
@@ -81,38 +81,36 @@ public class PrincipalController implements Initializable {
 
     @FXML
     private void enviar(ActionEvent event) throws InterruptedException {
+
         hbVozUm.getChildren().removeAll(hbVozUm.getChildren());
         hbVozDois.getChildren().removeAll(hbVozDois.getChildren());
-
         if (tfEntrada.getText().equals("") | cbPrimeiraNota.getValue() == null) {
             lbMsg.setText("Nenhum dos campo pode ser vazio!");
             setHboxPadrao();
         } else {
             String cifra[] = tfEntrada.getText().split(" ");
             boolean notaErrada = false;
-            for (int i = 0; i < cifra.length; i++) {
-                if (!(escala.foiImplementado(cifra[i]))) {
-                    notaErrada = true;
-                }
-            }
+//            for (int i = 0; i < cifra.length; i++) {
+//                if (!(escala.foiImplementado(cifra[i]))) {
+//                    notaErrada = true;
+//                }
+//            }
+//            if (notaErrada == true) {
+//                lbMsg.setText("Alguma nota digitada está incorreta\nou ainda não foi implementada");
+//                setHboxPadrao();
+//            } else {
+            lbMsg.setText("Vozes possíveis para essa cifra");
+            Nota primeiraNotaCantada = new Nota(cbPrimeiraNota.getValue());
+            String cf[] = tfEntrada.getText().split(" ");
+            Nota primeiraTriade[] = new Nota(cf[0]).getTriade();
 
-            if (notaErrada == true) {
-                lbMsg.setText("Alguma nota digitada está incorreta\nou ainda não foi implementada");
-                setHboxPadrao();
-            } else {
-                lbMsg.setText("Vozes possíveis para essa cifra");
-
-                Nota primeiraNotaCantada = new Nota(cbPrimeiraNota.getValue());
-                String cf[] = tfEntrada.getText().split(" ");
-                Nota primeiraTriade[] = new Nota(cf[0]).getTriade();
-
+            if (primeiraTriade != null) {
                 int cont = 0;
                 for (int i = 0; i < primeiraTriade.length; i++) {
                     if (primeiraNotaCantada.getNota().equalsIgnoreCase(primeiraTriade[i].getNota())) {
                         cont++;
                     }
                 }
-
                 if (cont > 0) {
                     setLabels();
                     imprimirTriades();
@@ -125,9 +123,12 @@ public class PrincipalController implements Initializable {
                     setText(lbVozDois, "Voz 2", 20);
                     setHboxPadrao();
                 }
+            } else {
+                lbMsg.setText("Alguma nota digitada está incorreta\nou ainda não foi implementada");
+                setHboxPadrao();
             }
-
         }
+//        }
     }
 
     private void setText(Label label, String texto, int tamanho) {
@@ -175,14 +176,11 @@ public class PrincipalController implements Initializable {
     }
 
     public void criarChoiceBox(Nota notaPai, Nota notaCriada, HBox local) {
-
         ObservableList<String> obsList = FXCollections.observableArrayList();
         Nota triade[] = notaPai.getTriade();
-
         for (Nota n : triade) {
             obsList.add(n.getNota());
         }
-
         ComboBox cbTriade = new ComboBox();
         cbTriade.setItems(obsList);
         cbTriade.setValue(notaCriada.getNota());
@@ -197,8 +195,13 @@ public class PrincipalController implements Initializable {
         Nota duoRestante[] = escala.getPossibilidades(new Nota(cifra[0]).getTriade(), primeiraNotaCantada);
         for (String nota : cifra) {
             Nota[] proxTriade = new Nota(nota).getTriade();
-            criarChoiceBox(new Nota(nota), new Nota(escala.getNotaMaisProxima(duoRestante[0], proxTriade)), hbVozUm);
-            criarChoiceBox(new Nota(nota), new Nota(escala.getNotaMaisProxima(duoRestante[1], proxTriade)), hbVozDois);
+            if (proxTriade != null) {
+                criarChoiceBox(new Nota(nota), new Nota(escala.getNotaMaisProxima(duoRestante[0], proxTriade)), hbVozUm);
+                criarChoiceBox(new Nota(nota), new Nota(escala.getNotaMaisProxima(duoRestante[1], proxTriade)), hbVozDois);
+            } else {
+                lbMsg.setText("Alguma nota digitada está incorreta\nou ainda não foi implementada");
+                setHboxPadrao();
+            }
         }
     }
 
@@ -207,24 +210,30 @@ public class PrincipalController implements Initializable {
         String saida = "";
         for (String c : cifra) {
             Nota n = new Nota(c);
-            if (!(n.isNulo())) {
-                saida += c + " - " + Arrays.toString(n.getTriade()) + "\n";
+            if (n != null) {
+                if (!(n.isNulo())) {
+                    saida += c + " - " + Arrays.toString(n.getTriade()) + "\n";
+                }
             }
         }
         tfSaida.setText(saida);
     }
 
-    @FXML
-    private void adicionarNota(ActionEvent event) {
-        if (tfEntrada.getText().equals("")) {
-            tfEntrada.setText(cbNotasNaturais.getValue());
-        } else {
-            tfEntrada.setText(tfEntrada.getText() + " " + cbNotasNaturais.getValue());
-        }
-    }
-
+//    @FXML
+//    private void adicionarNota(ActionEvent event) {
+//        if (tfEntrada.getText().equals("")) {
+//            tfEntrada.setText(cbNotasNaturais.getValue());
+//        } else {
+//            tfEntrada.setText(tfEntrada.getText() + " " + cbNotasNaturais.getValue());
+//        }
+//    }
     @FXML
     private void alteracaoEntrada(KeyEvent event) {
+    }
+
+    //Adiciona uma nova nota ao txt que contém todas as notas implementadas
+    @FXML
+    private void adicionarNovaNota() {
 
     }
 }

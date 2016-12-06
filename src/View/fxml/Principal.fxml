@@ -97,8 +97,6 @@
                     </items>
                 </ComboBox>
                 <TextField fx:id="tfEntrada" onAction="#enviar" onKeyPressed="#alteracaoEntrada" promptText="Digite a cifra da música, separado por espaços" HBox.hgrow="ALWAYS" />
-                <ComboBox fx:id="cbNotasNaturais" prefHeight="25.0" prefWidth="68.0" />
-                <Button fx:id="btnAdicionar" mnemonicParsing="false" onAction="#adicionarNota" styleClass="btnAzul" text="+" textFill="WHITE" />
                 <Button fx:id="fxEnviar" mnemonicParsing="false" onAction="#enviar" styleClass="btnVerde" text="Criar" textFill="WHITE" />
             </children>
             <padding>

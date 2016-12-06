@@ -11,7 +11,7 @@ package Cifra;
  */
 public class Nota {
 
-    private final String escala[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#"};
+    private final String escala[] = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#","G","G#","A","A#","B","C"};
     private String nome;
     private String nota;
 
@@ -21,11 +21,11 @@ public class Nota {
 
     public Nota(String nota) {
         try {
-            if (new Escala().foiImplementado(nota)) {
+//            if (new Escala().foiImplementado(nota)) {
                 this.setNota(nota);
-            } else {
-                throw new IllegalArgumentException();
-            }
+//            } else {
+//                throw new IllegalArgumentException();
+//            }
         } catch (IllegalArgumentException ex) {
             System.err.println("A nota (" + nota + ") não existe!\n" + ex);
         }
@@ -38,38 +38,78 @@ public class Nota {
         String tipo[] = getNota().split("");
 
         switch (tipo.length) {
+            // NOTAS NATURAIS
             case 1:
                 auxTerca = 4;
                 auxQuinta = 7;
                 break;
             case 2:
+                //NOTAS MENORES
                 if (tipo[1].equalsIgnoreCase("m")) {
                     auxTerca = 3;
                     auxQuinta = 7;
+                    //NOTAS COM SUSTENIDOS
                 } else if (tipo[1].equalsIgnoreCase("#")) {
                     auxTonica = 1;
                     auxTerca = 5;
                     auxQuinta = 8;
+                    //NOTAS COM SÉTIMA
+                } else if (tipo[1].equalsIgnoreCase("7")) {
+                    auxTerca = 4;
+                    auxQuinta = 10;
+                } else {
+                    return null;
                 }
                 break;
             case 3:
+                //NOTAS MENORES
                 if (tipo[1].equalsIgnoreCase("m")) {
                     auxTerca = 3;
                     auxQuinta = 7;
+                    //NOTAS MENORES COM SÉTIMA
+                    if (tipo[2].equalsIgnoreCase("7")) {
+                        auxQuinta = 10;
+                    } else{
+                        return null;
+                    }
+                    //NOTAS COM SUSTENIDO    
                 } else if (tipo[1].equalsIgnoreCase("#")) {
                     auxTonica = 1;
                     auxTerca = 5;
                     auxQuinta = 8;
-
+                    //SUSTENIDO MENOR
                     if (tipo[2].equalsIgnoreCase("m")) {
                         auxTerca = auxTerca - 1;
+                        //SUTENIDO COM SÉTIMA
+                    } else if (tipo[2].equalsIgnoreCase("7")) {
+                        auxQuinta = 10;
+                    } else {
+                        return null;  
                     }
+                } else {
+                    return null;
                 }
                 break;
-            default:
-                break;
+            case 4:
+                if (tipo[1].equalsIgnoreCase("#")) {
+                    auxTonica = 1;
+                    auxTerca = 5;
+                    auxQuinta = 8;
+                    if (tipo[2].equalsIgnoreCase("m")) {
+                        auxTerca = auxTerca - 1;
+                        if (tipo[3].equalsIgnoreCase("7")) {
+                            auxQuinta = 10;
+                        } else{
+                            return null;
+                        }
+                    } else {
+                        return null;
+                    }
+                    break;
+                } else{
+                    return null;
+                }
         }
-
         for (int i = 0; i < escala.length; i++) {
             if (escala[i].equalsIgnoreCase(tipo[0])) {
                 Nota triade[] = new Nota[3];
@@ -113,7 +153,5 @@ public class Nota {
     @Override
     public String toString() {
         return this.getNota() + " ";
-
     }
-
 }
